@@ -1,5 +1,7 @@
 <?php
 
+require_once 'MyMvc/Exception.php';
+
 abstract class Controller{
     
     /**
@@ -22,6 +24,8 @@ abstract class Controller{
         
         if (method_exists($this, $actionName)){
             $this->$actionName();
+        }else{
+            throw new MyMvc_Exception('Action not found', 404);
         }
     }
     

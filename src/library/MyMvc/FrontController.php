@@ -3,6 +3,7 @@
 require_once 'MyMvc/Request.php';
 require_once 'MyMvc/View.php';
 require_once 'MyMvc/Response.php';
+require_once 'MyMvc/Exception.php';
 
 /**
  * FrontController fait la relation entre la vue, le controller, charge la response.
@@ -29,7 +30,15 @@ class FrontController {
         $this->setRequest($request);
         $this->setView($view);
         
-        $this->initController();        
+        try {
+            $this->initController();
+        }catch(MyMvc_Exception $exception){
+            require_once APP_PATH. DS . 'controllers' . DS . 'ErrorController.php';
+            $errorController = new ErrorController($view, $request);
+            $errorController->setHandleError($exception);
+            $this->setController($errorController);
+            $request->setAction('error');
+        }        
         //new Response($this->getView());
     }
     
@@ -43,8 +52,14 @@ class FrontController {
         $pathController = APP_PATH . DS . 'controllers' . DS . $controllerName . '.php';
         if (file_exists($pathController)){
             require_once $pathController;
-            $controller = new $controllerName($this->getView(), $this->getRequest());
-            $this->setController($controller);
+            if (class_exists($controllerName)){
+                $controller = new $controllerName($this->getView(), $this->getRequest());
+                $this->setController($controller);
+            }else{
+                throw new MyMvc_Exception('ControllerClass not found', 500);
+            }
+        }else{
+            throw new MyMvc_Exception('ControllerFile not found', 404);
         }
     }
     
