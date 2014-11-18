@@ -10,12 +10,12 @@ class Request{
     protected $defaultController = 'index';
     protected $defaultAction = 'index';
     
-    protected $serverUI;
+    protected $serverURI;
     protected $controller;
     protected $action;
 
     public function __construct(){
-        $this->serverURI($_SERVER['REQUEST-URI']);
+        $this->serverURI = $_SERVER['REQUEST_URI'];
         // Request contient les éléments de la requête HTTP
         $requestUri = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
         

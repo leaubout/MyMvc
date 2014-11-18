@@ -33,11 +33,11 @@ class FrontController {
         try {
             $this->initController();
         }catch(MyMvc_Exception $exception){
+            $request->setAction('error');
             require_once APP_PATH. DS . 'controllers' . DS . 'ErrorController.php';
             $errorController = new ErrorController($view, $request);
             $errorController->setHandleError($exception);
             $this->setController($errorController);
-            $request->setAction('error');
         }        
         //new Response($this->getView());
     }
