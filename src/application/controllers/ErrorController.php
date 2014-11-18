@@ -7,7 +7,7 @@ class ErrorController extends Controller{
     protected $handleError;
     
     public function setHandleError($exception){
-        $this->view->setPathView('error'. DS. 'error.phtml');
+        $this->view->setPathView('error' . DS . 'error.phtml');
         $this->handleError = $exception;
     }
     
@@ -16,6 +16,7 @@ class ErrorController extends Controller{
     }
     
     public function errorAction(){
-        
+        $this->view->getResponse()->setResponseCode($this->handleError->getCode());
+        $this->view->message = $this->handleError->getMessage();
     }
 }

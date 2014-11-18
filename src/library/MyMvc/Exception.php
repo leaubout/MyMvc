@@ -2,7 +2,11 @@
 
 class MyMvc_Exception extends Exception{
     
-    public function __construct($message, $code, $previous = NULL){
-        
+    protected $message;
+    protected $code;
+    
+    public function __construct($message, $code){
+        $this->message = $message;
+        $this->code = $code;
     }
 }

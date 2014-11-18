@@ -18,16 +18,8 @@ abstract class Controller{
     public function __construct(View $view, Request $request){
         $this->setView($view);
         $this->init();
-        
-        // création du nom de l'action appelée via l'url et le paramètre action
-        $actionName = strtolower($request->getAction()) . 'Action';
-        
-        if (method_exists($this, $actionName)){
-            $this->$actionName();
-        }else{
-            throw new MyMvc_Exception('Action not found', 404);
-        }
     }
+
     
     // actions par défaut, par exemple, vérifier que l'utilisateur est connecté
     public function init(){}

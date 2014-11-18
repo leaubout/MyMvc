@@ -32,14 +32,20 @@ class FrontController {
         
         try {
             $this->initController();
+            $this->initAction();
         }catch(MyMvc_Exception $exception){
+            $request->setController('error');
             $request->setAction('error');
+            $this->initController();
+            $this->getController()->setHandleError($exception);
+            $this->initAction();
+            /*$request->setAction('error');
             require_once APP_PATH. DS . 'controllers' . DS . 'ErrorController.php';
             $errorController = new ErrorController($view, $request);
             $errorController->setHandleError($exception);
             $this->setController($errorController);
+            */
         }        
-        //new Response($this->getView());
     }
     
     /**
@@ -48,8 +54,8 @@ class FrontController {
      */
     public function initController(){
         $controllerName = ucfirst($this->request->getController()) . 'Controller';
-        
         $pathController = APP_PATH . DS . 'controllers' . DS . $controllerName . '.php';
+        
         if (file_exists($pathController)){
             require_once $pathController;
             if (class_exists($controllerName)){
@@ -61,6 +67,17 @@ class FrontController {
         }else{
             throw new MyMvc_Exception('ControllerFile not found', 404);
         }
+    }
+    
+    public function initAction(){
+        // création du nom de l'action appelée via l'url et le paramètre action
+        $actionName = strtolower($this->request->getAction()) . 'Action';
+        
+        if (method_exists($this->getController(), $actionName)){
+            $this->getController()->$actionName();
+        }else{
+            throw new MyMvc_Exception('Action not found', 404);
+        }        
     }
     
 	/**

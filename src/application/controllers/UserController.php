@@ -29,7 +29,7 @@ class UserController extends Controller{
     
     public function updateAction(){
         $this->view->titre = "Je suis update";
-        $this->view->getResponse()->setResponseCode(400);
+        $this->view->getResponse()->setResponseCode(200);
     }
     
     public function deleteAction(){
