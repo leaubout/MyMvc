@@ -35,7 +35,13 @@ class Application{
 		$this->view->render();
 		$viewContent = ob_get_clean();
 
-		$this->response->setBody($viewContent);
+		$layout = new Layout;
+		$layout->setContent($viewContent);
+		ob_start();
+		$layout->render();
+		$layoutContent = ob_get_clean();
+
+		$this->response->setBody($layoutContent);
 		$this->response->send();
 		
 	}
