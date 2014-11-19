@@ -1,0 +1,15 @@
+{
+    "name": "ip/mymvc2",
+    "authors": [
+        {
+            "name": "Jane Dose",
+            "email": "jane@example.com"
+        }
+    ],
+    "require": {},
+    "autoload":{
+    	"psr-0": {
+    		"MyMVC" : "library"
+    	}
+    }
+}
