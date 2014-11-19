@@ -18,4 +18,3 @@ require_once ROOT_PATH. "/vendor/autoload.php";
 
 $application = new MyMVC\Application;
 $application->run();
-var_dump($application);
