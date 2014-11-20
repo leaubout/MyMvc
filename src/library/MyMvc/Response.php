@@ -7,7 +7,7 @@ class Response {
 	private $headers = array();
 	private $body;
 	private $httpCodes = array(
-		200 => 'Zut',
+		200 => 'OK',
 		301 => 'Moved Permanently',
 		403 => 'Forbidden',
 		404 => 'Not Found',
