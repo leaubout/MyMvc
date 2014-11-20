@@ -51,14 +51,13 @@ class Application{
         		// Rendering
         		$this->view->render();
         		$viewContent = ob_get_clean();
-    		}catch (\Exception $e){
+    		} catch (\Exception $e){
     		    $this->request->setController('error');
     		    $this->request->setAction('error');
     		    $this->request->setDispatched(false);
     		    $this->request->setException($e);
     		}
-		}
-		while(!$this->request->isDispatched());
+		} while (!$this->request->isDispatched());
 		
 		$layout = new Layout($this->request, $this->view);
 		$layout->setContent($viewContent);
