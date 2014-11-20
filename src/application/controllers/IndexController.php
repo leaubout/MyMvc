@@ -10,6 +10,6 @@ class IndexController extends \MyMVC\ControllerAbstract{
 	}
 
 	public function testAction(){
-		echo 'test';
+		//echo 'test';
 	}
 }
