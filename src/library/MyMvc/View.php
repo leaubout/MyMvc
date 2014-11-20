@@ -5,6 +5,7 @@ namespace MyMVC;
 class View{
 	
 	private $request;
+	private $title;
 
 	public function __construct(Request $request){
 		$this->request = $request;
@@ -16,4 +17,13 @@ class View{
 						strtolower($this->request->getAction()) . '.phtml';
 		require_once $viewFile;
 	}
+	
+	public function setTitle($title){
+	    $this->title = $title;
+	}	
+	
+	public function getTitle(){
+	    return $this->title;
+	}
+	
 }

@@ -11,7 +11,7 @@ class Application{
 	public function __construct(){
 		$this->request = new Request;
 		$this->response = new Response;
-		$this->view = new View ($this->request);
+		$this->view = new View($this->request);
 	}
 
 	public function run(){
@@ -60,7 +60,7 @@ class Application{
 		}
 		while(!$this->request->isDispatched());
 		
-		$layout = new Layout;
+		$layout = new Layout($this->request, $this->view);
 		$layout->setContent($viewContent);
 		ob_start();
 		$layout->render();
