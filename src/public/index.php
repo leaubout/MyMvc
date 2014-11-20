@@ -15,6 +15,8 @@ defined('LIB_PATH') || define('LIB_PATH', ROOT_PATH . DS . 'library');
 /* nouveau */
 require_once ROOT_PATH. "/vendor/autoload.php";
 
+set_error_handler(array('MyMVC\ErrorHandler', 'handleError'));
+set_exception_handler(array('MyMVC\ErrorHandler', 'handleException'));
 
 $application = new MyMVC\Application;
 $application->run();
