@@ -5,7 +5,6 @@ namespace MyMVC;
 class View{
 	
 	private $request;
-	private $title;
 
 	public function __construct(Request $request){
 		$this->request = $request;
@@ -18,12 +17,28 @@ class View{
 		require_once $viewFile;
 	}
 	
-	public function setTitle($title){
-	    $this->title = $title;
-	}	
-	
-	public function getTitle(){
-	    return $this->title;
+	public function __call($method, $args){
+	    
+	    $helperFile = APP_PATH . '/viewhelpers/' . ucfirst($method) . '.php';
+	    if (!file_exists($helperFile)){
+	        throw new \Exception('unknown view helper file for ' . $method);
+	    }
+	    require_once $helperFile;
+	    
+	    $helperClass = 'Viewhelper_' . ucfirst($method);
+	    if (!class_exists($helperClass)){
+	        throw new \Exception('unknown view helper class for ' . $method);
+	    }
+	    // instanciation dynamique de la classe
+	    $helper = new $helperClass;
+	    if (!method_exists($helper, $method)){
+	        throw new \Exception('unknown view helper method for ' . $method);
+	    }
+	    
+        return $helper->$method(implode(',', $args));
+	    
+	    
 	}
+
 	
 }

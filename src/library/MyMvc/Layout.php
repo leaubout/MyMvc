@@ -30,18 +30,10 @@ class Layout{
 	    $internal = $this->request->getController() . '/' . $this->request->getAction();
 	    return ($route == $internal);
 	}
-/*	
-	public function getTitle(){
-	    return $this->view->getTitle();
-	}
-*/
 
+    // virtualisation des méthodes pour proxy vers la vue
 	public function __call($method, $args){
-	    if (method_exists($this->view, $method)){
-	        return $this->view->$method(implode(',',$args));
-	    }else{
-	        throw new \Exception('Unknown method ' . $method);
-	    }
+        return $this->view->$method(implode(',',$args));
 	}
 	
 }

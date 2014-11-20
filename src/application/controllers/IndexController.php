@@ -8,12 +8,12 @@ class IndexController extends \MyMVC\ControllerAbstract{
 	    $userApi = new Service_User;
 	    $user = $userApi->find(1);
 		$this->view->user = $user;
-		$this->view->setTitle("Page de : " . $user->getName());
+		$this->view->title("Page de : " . $user->getName());
 	}
 
 	public function testAction(){
 		//echo 'test';
-	    $this->view->setTitle("Page de test");
+	    $this->view->title("Page de test");
 	}
 		
 }
