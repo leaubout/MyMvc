@@ -15,6 +15,8 @@ class Request{
     private $uri;
     private $controller;
     private $action;
+    private $dispatch = FALSE;
+    private $exception = FALSE;
     
     public function __construct(){
         $this->uri = $_SERVER['REQUEST_URI'];
@@ -42,7 +44,19 @@ class Request{
     {
         return $this->action;
     }
+    
+    public function isDispatched(){
+        return (bool) $this->dispatch;
+    }    
 
+    /**
+     * 
+     * @return boolean or \Exception
+     */
+    public function getException(){
+        return $this->exception;
+    }    
+    
 	/**
      * @param field_type $uri
      */
@@ -67,5 +81,12 @@ class Request{
         $this->action = $action;
     }
 
-    
+    public function setDispatched($status){
+        $this->dispatch = (bool) $status;
+        return $this;
+    }
+
+    public function setException($e){
+        $this->exception = $e;
+    }
 }
