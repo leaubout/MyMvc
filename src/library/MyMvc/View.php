@@ -23,6 +23,7 @@ class View{
 	    if (!file_exists($helperFile)){
 	        throw new \Exception('unknown view helper file for ' . $method);
 	    }
+	    // inclusion dynamique du fichier
 	    require_once $helperFile;
 	    
 	    $helperClass = 'Viewhelper_' . ucfirst($method);
@@ -31,10 +32,11 @@ class View{
 	    }
 	    // instanciation dynamique de la classe
 	    $helper = new $helperClass;
+	    
 	    if (!method_exists($helper, $method)){
 	        throw new \Exception('unknown view helper method for ' . $method);
 	    }
-	    
+	    // appel dynamique de la méthode
         return $helper->$method(implode(',', $args));
 	    
 	    
